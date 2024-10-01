@@ -65,22 +65,36 @@ def health():
 @APP.route('/auth', methods=['POST'])
 def auth():
     """
-    Create JWT token based on email.
+    Create JWT token based on email and password.
     """
     request_data = request.get_json()
     email = request_data.get('email')
     password = request_data.get('password')
+
     if not email:
         LOG.error("No email provided")
-        return jsonify({"message": "Missing parameter: email"}, 400)
+        return jsonify({"message": "Missing parameter: email"}), 400
     if not password:
         LOG.error("No password provided")
-        return jsonify({"message": "Missing parameter: password"}, 400)
-    body = {'email': email, 'password': password}
+        return jsonify({"message": "Missing parameter: password"}), 400
 
-    user_data = body
+    # Here you would typically validate the email and password against your user database
+    # For example:
+    # user = find_user_by_email(email)
+    # if not user or not check_password(user, password):
+    #     LOG.error("Invalid email or password")
+    #     return jsonify({"message": "Invalid email or password"}), 401
 
-    return jsonify(token=_get_jwt(user_data).decode('utf-8'))
+    # Assuming user validation is successful, create the JWT token
+    user_data = {'email': email}  # You can add more user-related data if needed
+
+    try:
+        token = _get_jwt(user_data).decode('utf-8')
+        LOG.info("Token created successfully for user: %s", email)
+        return jsonify(token=token), 200
+    except Exception as e:
+        LOG.error("Error creating token: %s", str(e))
+        return jsonify({"message": "Error creating token"}), 500
 
 
 @APP.route('/contents', methods=['GET'])
