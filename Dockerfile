@@ -1,11 +1,11 @@
-# Use the `python:3.9` as a source image
-FROM python:stretch
+FROM public.ecr.aws/sam/build-python3.7:latest
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # Set up an app directory for your code
+COPY . /app
 WORKDIR /app
 
 # Copy only the requirements file first to leverage Docker cache

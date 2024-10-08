@@ -78,15 +78,9 @@ def auth():
         LOG.error("No password provided")
         return jsonify({"message": "Missing parameter: password"}), 400
 
-    # Here you would typically validate the email and password against your user database
-    # For example:
-    # user = find_user_by_email(email)
-    # if not user or not check_password(user, password):
-    #     LOG.error("Invalid email or password")
-    #     return jsonify({"message": "Invalid email or password"}), 401
 
     # Assuming user validation is successful, create the JWT token
-    user_data = {'email': email}  # You can add more user-related data if needed
+    user_data = {'email': email, 'password': password}  # You can add more user-related data if needed
 
     try:
         token = _get_jwt(user_data).decode('utf-8')

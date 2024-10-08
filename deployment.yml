@@ -19,4 +19,4 @@ spec:
         - containerPort: 8080
         env:
         - name: JWT_SECRET
-          value: your_jwt_secret_value  # Replace with your actual JWT secret
+          value: your_jwt_secret_value  
