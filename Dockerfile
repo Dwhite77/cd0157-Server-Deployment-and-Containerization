@@ -1,8 +1,8 @@
 FROM public.ecr.aws/sam/build-python3.7:latest
 
 # Set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 # Set up an app directory for your code
 COPY . /app
